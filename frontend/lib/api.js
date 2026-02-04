@@ -3,7 +3,8 @@
  * Handles timeouts, errors, and provides typed responses
  */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+// For static export, env vars must be set at build time in Netlify
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://cloud-clip-api-107631450464.us-central1.run.app';
 
 export const fetchWithTimeout = async (url, opts = {}, timeout = 20000) => {
   const controller = new AbortController();
