@@ -1,18 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
   images: {
-    domains: ['storage.googleapis.com'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'storage.googleapis.com',
-        pathname: '/**',
-      },
-    ],
+    unoptimized: true,
   },
   env: {
-    NEXT_PUBLIC_API_BASE: process.env.NEXT_PUBLIC_API_BASE,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
 }
 
