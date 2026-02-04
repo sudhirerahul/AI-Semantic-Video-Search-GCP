@@ -96,25 +96,10 @@ Enhanced query:"""
 
 
 def generate_signed_url(blob_name: str, expiration_minutes: int = 60) -> str:
-    """Generate signed URL for GCS object using IAM-based signing"""
-    from google.auth import iam
-    from google.auth.transport import requests as google_requests
-
-    blob = bucket.blob(blob_name)
-
-    # Use IAM-based signing for Cloud Run
-    signing_credentials = iam.Signer(
-        google_requests.Request(),
-        storage_client._credentials,
-        storage_client._credentials.service_account_email
-    )
-
-    url = blob.generate_signed_url(
-        expiration=timedelta(minutes=expiration_minutes),
-        method='GET',
-        credentials=signing_credentials
-    )
-    return url
+    """Generate public URL for GCS object (bucket is publicly readable)"""
+    # Use public URL since bucket is set to public read
+    public_url = f"https://storage.googleapis.com/{BUCKET_NAME}/{blob_name}"
+    return public_url
 
 
 def load_video_index(video_id: str) -> dict:
