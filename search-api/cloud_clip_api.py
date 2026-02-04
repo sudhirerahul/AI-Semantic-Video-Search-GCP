@@ -26,12 +26,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app, origins=[
-    'http://localhost:3000',
-    'http://localhost:8000',
-    'https://*.vercel.app',
-    'https://vercel.app'
-])
+# Allow all origins for now - restrict in production
+CORS(app)
 
 # Configuration
 PROJECT_ID = os.environ.get('PROJECT_ID', 'gen-lang-client-0067393875')
