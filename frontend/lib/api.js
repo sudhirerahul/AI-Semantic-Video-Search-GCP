@@ -3,7 +3,7 @@
  * Handles timeouts, errors, and provides typed responses
  */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8080';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8080';
 
 export const fetchWithTimeout = async (url, opts = {}, timeout = 20000) => {
   const controller = new AbortController();

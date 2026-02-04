@@ -96,11 +96,23 @@ Enhanced query:"""
 
 
 def generate_signed_url(blob_name: str, expiration_minutes: int = 60) -> str:
-    """Generate signed URL for GCS object"""
+    """Generate signed URL for GCS object using IAM-based signing"""
+    from google.auth import iam
+    from google.auth.transport import requests as google_requests
+
     blob = bucket.blob(blob_name)
+
+    # Use IAM-based signing for Cloud Run
+    signing_credentials = iam.Signer(
+        google_requests.Request(),
+        storage_client._credentials,
+        storage_client._credentials.service_account_email
+    )
+
     url = blob.generate_signed_url(
         expiration=timedelta(minutes=expiration_minutes),
-        method='GET'
+        method='GET',
+        credentials=signing_credentials
     )
     return url
 
