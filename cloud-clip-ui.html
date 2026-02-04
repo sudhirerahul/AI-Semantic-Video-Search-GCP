@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Scene Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.5); }
+        }
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+        .animate-pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+        .animate-spinner { animation: spinner 0.6s linear infinite; }
+        .comet-card { @apply bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl; }
+        :root {
+            color-scheme: dark;
+        }
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #0b0f14;
+            color: #e6eef8;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                    colors: {
+                        'comet-950': '#0b0f14',
+                        'comet-900': '#15161a',
+                        'comet-800': '#1f2023',
+                        'comet-700': '#2a2c31',
+                        'comet-600': '#35373e',
+                        'comet-500': '#4a4d5a',
+                        'comet-400': '#6c7080',
+                        'comet-300': '#9fa3b0',
+                        'comet-200': '#c9ccd4',
+                        'comet-100': '#e8e9ed',
+                        'accent-purple': '#8b5cf6',
+                        'accent-blue': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen text-comet-100">
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-comet-950/80 border-b border-comet-700/50">
+        <div class="max-w-4xl mx-auto px-6 py-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-accent-purple to-accent-blue rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-semibold text-comet-100">AI Video Scene Search</h1>
+                    <p class="text-xs text-comet-400">Search preloaded videos with natural language</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-6 pt-24 pb-12">
+        <div id="app" class="space-y-6"></div>
+        <div id="results" class="mt-6"></div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="max-w-4xl w-full bg-comet-900 rounded-2xl overflow-hidden">
+            <div class="flex items-center justify-between p-4 border-b border-comet-700">
+                <div>
+                    <h3 id="modalTitle" class="font-semibold text-comet-100"></h3>
+                    <p id="modalSubtitle" class="text-sm text-comet-400 mt-1"></p>
+                </div>
+                <button onclick="closeModal()" class="p-2 hover:bg-comet-800 rounded-lg transition-colors">
+                    <svg class="w-5 h-5 text-comet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="aspect-video bg-black">
+                <video id="modalVideo" controls autoplay class="w-full h-full"></video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080';
+        let selectedVideoId = null;
+        let videos = [];
+        let searchResults = [];
+
+        // Initialize
+        async function init() {
+            try {
+                // Load videos
+                const response = await axios.get(`${API_BASE_URL}/videos`);
+                videos = response.data;
+
+                if (videos.length > 0) {
+                    selectedVideoId = videos[0].video_id;
+                }
+
+                render();
+            } catch (error) {
+                console.error('Init error:', error);
+                renderError('Failed to load videos. Please ensure the API is running.');
+            }
+        }
+
+        // Render main UI
+        function render() {
+            const app = document.getElementById('app');
+
+            if (videos.length === 0) {
+                app.innerHTML = renderNoVideos();
+                return;
+            }
+
+            app.innerHTML = renderVideoSelector() + renderQueryInput();
+        }
+
+        function renderNoVideos() {
+            return `
+                <div class="comet-card p-12 text-center animate-fade-in">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-full mb-4">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-comet-100 mb-2">No videos found</h2>
+                    <p class="text-comet-400">Please ensure videos are indexed in the system.</p>
+                </div>
+            `;
+        }
+
+        function renderVideoSelector() {
+            return `
+                <div class="comet-card p-6 animate-fade-in">
+                    <label class="block text-sm font-medium text-comet-200 mb-3">Select Video</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${videos.map(video => `
+                            <div onclick="selectVideo('${video.video_id}')"
+                                 class="comet-card p-4 cursor-pointer transition-all ${selectedVideoId === video.video_id ? 'border-accent-purple bg-accent-purple/10' : 'hover:border-comet-600'}">
+                                ${video.poster_thumbnail_url ? `
+                                    <img src="${video.poster_thumbnail_url}"
+                                         class="w-full aspect-video object-cover rounded-lg mb-3"
+                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'400\\' height=\\'225\\'%3E%3Crect fill=\\'%231f2023\\' width=\\'400\\' height=\\'225\\'/%3E%3Ctext fill=\\'%239fa3b0\\' font-family=\\'Inter\\' font-size=\\'14\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'%3ENo preview%3C/text%3E%3C/svg%3E'" />
+                                ` : ''}
+                                <div class="font-semibold text-comet-100">${video.title}</div>
+                                <div class="text-sm text-comet-400 mt-1">${video.num_shots} scenes | ${formatDuration(video.duration)}</div>
+                                ${selectedVideoId === video.video_id ? '<div class="mt-2 text-xs text-accent-purple font-medium">Selected</div>' : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderQueryInput() {
+            return `
+                <div class="comet-card p-6 animate-fade-in">
+                    <label class="block text-sm font-medium text-comet-200 mb-3">Search for a scene</label>
+                    <div class="flex gap-3">
+                        <input
+                            type="text"
+                            id="queryInput"
+                            placeholder="Enter a query to find a scene in the selected video"
+                            class="flex-1 bg-comet-800/50 border border-comet-700/50 text-comet-100 placeholder-comet-400 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 focus:border-accent-purple/50 transition-all"
+                            onkeypress="if(event.key==='Enter') handleSearch()"
+                        />
+                        <button
+                            onclick="handleSearch()"
+                            class="px-6 py-3 bg-gradient-to-r from-accent-purple to-accent-blue text-white font-medium rounded-xl hover:opacity-90 transition-all">
+                            Search
+                        </button>
+                    </div>
+                    <div class="flex gap-2 mt-3 flex-wrap">
+                        <span class="text-xs text-comet-500">Examples:</span>
+                        ${['person speaking', 'outdoor scene', 'close up shot', 'two people talking'].map(ex =>
+                            `<button onclick="setQuery('${ex}')" class="text-xs px-3 py-1 bg-comet-800/50 border border-comet-700/50 rounded-full hover:border-accent-purple/50 text-comet-300 transition-all">${ex}</button>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderError(message) {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="comet-card p-12 text-center animate-fade-in border-red-500/50">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-full mb-4">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-comet-100 mb-2">Error</h2>
+                    <p class="text-comet-400">${message}</p>
+                </div>
+            `;
+        }
+
+        function selectVideo(videoId) {
+            selectedVideoId = videoId;
+            searchResults = [];
+            renderResults([]);
+            render();
+        }
+
+        function setQuery(query) {
+            document.getElementById('queryInput').value = query;
+            handleSearch();
+        }
+
+        async function handleSearch() {
+            const query = document.getElementById('queryInput').value.trim();
+            if (!query || !selectedVideoId) return;
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <div class="comet-card p-8 text-center animate-fade-in">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-accent-purple/20 rounded-full mb-4 animate-pulse-glow">
+                        <div class="w-8 h-8 border-4 border-accent-purple border-t-transparent rounded-full animate-spinner"></div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-comet-100">Searching</h3>
+                    <p class="text-comet-400 mt-2">Finding relevant scenes...</p>
+                </div>
+            `;
+
+            try {
+                const response = await axios.post(`${API_BASE_URL}/query`, {
+                    video_id: selectedVideoId,
+                    query: query,
+                    top_k: 5
+                });
+
+                searchResults = response.data;
+
+                if (searchResults.length === 0) {
+                    resultsDiv.innerHTML = `
+                        <div class="comet-card p-8 text-center animate-fade-in">
+                            <h3 class="text-lg font-semibold text-comet-100">No matching scene found</h3>
+                            <p class="text-comet-400 mt-2">Try rephrasing your query.</p>
+                        </div>
+                    `;
+                } else {
+                    renderResults(searchResults);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="comet-card p-8 text-center animate-fade-in border-red-500/50">
+                        <h3 class="text-lg font-semibold text-comet-100">Search failed</h3>
+                        <p class="text-comet-400 mt-2">${error.response?.data?.error || error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderResults(results) {
+            const resultsDiv = document.getElementById('results');
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            resultsDiv.innerHTML = `
+                <div class="animate-fade-in">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-comet-100">Found ${results.length} matching scenes</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${results.map((scene, idx) => `
+                            <div class="comet-card p-4 transition-all group">
+                                <div class="relative aspect-video bg-comet-800 rounded-lg overflow-hidden mb-3">
+                                    <img src="${scene.thumbnail_url}"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'400\\' height=\\'225\\'%3E%3Crect fill=\\'%231f2023\\' width=\\'400\\' height=\\'225\\'/%3E%3Ctext fill=\\'%239fa3b0\\' font-family=\\'Inter\\' font-size=\\'14\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'%3ENo thumbnail%3C/text%3E%3C/svg%3E'" />
+                                    <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/80 rounded text-xs text-white font-medium">
+                                        ${formatTime(scene.start)} - ${formatTime(scene.end)}
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-comet-300">Scene ${scene.shot_index + 1}</span>
+                                    <span class="text-sm font-semibold ${getScoreColor(scene.score)}">${(scene.score * 100).toFixed(0)}%</span>
+                                </div>
+                                <button onclick="playClip(${idx})"
+                                        class="w-full px-4 py-2 bg-accent-purple/20 border border-accent-purple/50 text-accent-purple rounded-lg hover:bg-accent-purple/30 transition-all font-medium">
+                                    Play clip
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function playClip(resultIdx) {
+            const scene = searchResults[resultIdx];
+
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+
+            // Show loading state
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('modalTitle').textContent = 'Preparing clip';
+            document.getElementById('modalSubtitle').textContent = 'Should be ready in a few seconds...';
+            video.style.display = 'none';
+
+            try {
+                const response = await axios.post(`${API_BASE_URL}/extract_clip`, {
+                    video_id: selectedVideoId,
+                    shot_index: scene.shot_index
+                });
+
+                const clip = response.data;
+
+                // Update modal with clip
+                document.getElementById('modalTitle').textContent = `Scene: ${formatTime(clip.start)} - ${formatTime(clip.end)}`;
+                document.getElementById('modalSubtitle').textContent = `Duration: ${clip.duration}s | Score: ${(scene.score * 100).toFixed(0)}%`;
+
+                video.src = clip.clip_url;
+                video.style.display = 'block';
+                video.load();
+                video.play();
+
+            } catch (error) {
+                console.error('Clip extraction error:', error);
+                document.getElementById('modalTitle').textContent = 'Error';
+                document.getElementById('modalSubtitle').textContent = error.response?.data?.error || 'Failed to extract clip';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            video.pause();
+            video.src = '';
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function formatDuration(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            if (mins === 0) return `${secs}s`;
+            return `${mins}m ${secs}s`;
+        }
+
+        function getScoreColor(score) {
+            if (score >= 0.25) return 'text-green-400';
+            if (score >= 0.20) return 'text-yellow-400';
+            return 'text-comet-400';
+        }
+
+        // Initialize on page load
+        init();
+    </script>
+</body>
+</html>

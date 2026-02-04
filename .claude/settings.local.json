@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export BUCKET_NAME=\"gen-lang-client-0067393875-media-proto\")",
+      "Bash(gcloud storage ls:*)",
+      "Bash(gcloud config:*)",
+      "Bash(gsutil ls:*)",
+      "Bash(gsutil mb:*)",
+      "Bash(gsutil cp:*)",
+      "Bash(gcloud services enable:*)",
+      "Bash(gcloud iam service-accounts list:*)",
+      "Bash(gcloud iam service-accounts create:*)"
+    ]
+  }
+}
