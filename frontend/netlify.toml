@@ -4,3 +4,8 @@
 
 [build.environment]
   NEXT_PUBLIC_API_URL = "https://cloud-clip-api-107631450464.us-central1.run.app"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
