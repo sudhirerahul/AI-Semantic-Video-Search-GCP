@@ -2,6 +2,167 @@
 
 Semantic video search with natural language queries, powered by CLIP embeddings and Gemini 2.0 Flash.
 
+---
+
+## The Problem: Finding Moments in Video is Still Painfully Manual
+
+### What Teams Face Today
+
+Media organizations, production studios, and content teams manage thousands of hours of video footage. When someone needs to find a specific moment—a product demonstration, a particular speaker, an outdoor scene—they face a critical bottleneck:
+
+**Manual review is the only option.**
+
+Editors spend [1 in 10 hours searching for content](https://www.productionhub.com/blog/post/active-archives-the-future-of-media-workflows-in-modern-production-environments), representing massive time and cost burdens. Much footage remains [locked away in archives that are difficult to access and even harder to use](https://www.productionhub.com/blog/post/active-archives-the-future-of-media-workflows-in-modern-production-environments).
+
+### Who Experiences This
+
+- **Media Production Teams**: Searching for B-roll, archival footage, or specific shots across hundreds of hours
+- **Marketing Departments**: Repurposing webinar clips, event footage, or product demos for campaigns
+- **Legal & Compliance Teams**: Finding evidence, documentation, or specific statements in depositions and recordings
+- **Training & Education**: Locating relevant segments from recorded lectures, workshops, or demonstrations
+- **Broadcasting Studios**: Accessing decades of footage for news packages, documentaries, or retrospectives
+
+### Why This is Hard at Scale
+
+Traditional solutions fail because:
+
+1. **Keyword search requires perfect metadata** - Someone must manually tag every moment with exact terms. This is prohibitively expensive and incomplete.
+
+2. **Automatic transcription only captures spoken words** - Visual content (actions, scenes, objects, emotions) remains unsearchable.
+
+3. **Manual review doesn't scale** - Reviewing 100 hours of footage to find 30 seconds is economically impossible for most teams.
+
+4. **The problem compounds exponentially** - As video libraries grow, the probability of finding what you need without perfect metadata approaches zero.
+
+### The Hidden Costs
+
+Without effective video search:
+- **Footage goes unused**: Valuable content created at high cost is never discovered or repurposed
+- **Decisions slow down**: Teams settle for "good enough" rather than finding the perfect clip
+- **Duplication multiplies costs**: New footage is created because existing content can't be found
+- **Compliance risks increase**: Critical evidence or documentation remains buried when needed most
+
+---
+
+## Why Existing Solutions Fall Short
+
+### Keyword-Based Search: The Metadata Problem
+
+Traditional video platforms rely on manual tagging:
+- **Labor-intensive**: Someone must watch footage and apply keywords
+- **Incomplete coverage**: Most moments never get tagged
+- **Vocabulary mismatch**: Users search for "sunset" when the tag says "golden hour"
+- **No visual understanding**: Cannot find "person smiling" or "outdoor scene" without explicit tags
+
+[Industry research](https://www.dpconline.org/docs/miscellaneous/events/581-sound-vision-zybrycki/file) confirms: "Efficient exploitation of broadcasters' archives will increasingly depend on accurate metadata" — but manual metadata creation doesn't scale.
+
+### Automatic Transcription: The Visual Blind Spot
+
+Speech-to-text solves one problem but ignores the visual dimension:
+- Cannot find scenes based on what's *shown*, only what's *said*
+- Misses non-verbal content: actions, objects, environments, emotions
+- Useless for silent footage or music-heavy content
+- [Doesn't address the fact that](https://blendvision.com/en/blog/beyond-keywords-how-semantic-video-search-is-transforming-content-discovery) users need to find content based on visual context, not just dialogue
+
+### Manual Review: The Time Constraint
+
+Watching footage is accurate but economically impossible:
+- **1 hour of footage = 1 hour of review time** (minimum)
+- At industry rates, searching 100 hours of content costs thousands of dollars
+- [Editors report spending 10% of their time](https://www.productionhub.com/blog/post/active-archives-the-future-of-media-workflows-in-modern-production-environments) just looking for content
+- As libraries grow, the time required increases linearly — the problem never improves
+
+### The Scale Problem
+
+All three approaches break when:
+- Video libraries exceed 1,000 hours
+- Teams need results in minutes, not days
+- Content is created faster than it can be tagged
+- Budget constraints prevent comprehensive manual review
+
+[Broadcasting and media production research](https://twistist.com/broadcast-archiving-solutions/) shows: "The sheer volume and diversity of media assets pose challenges, with organizations accumulating vast amounts of files in different formats, resolutions, and metadata structures."
+
+---
+
+## Business Impact: What Changes When Search Works
+
+### Time Saved
+
+Organizations using semantic video search report:
+- **25-40% shorter sales cycles** when prospects engage with [semantically optimized educational video content](https://fortiervo.com/blog/boost-roi-with-semantic-mapping-and-behavioral-feedback-tactics/)
+- **30-35% productivity increase** for employees who can [find information faster](https://www.ewsolutions.com/semantic-search-algorithm/)
+- **Editors reclaim 10% of their time** previously spent searching for footage
+
+**Real-world impact**: A production team managing 500 hours of footage reduces search time from hours to seconds. Instead of reviewing 20 clips manually, they query "person speaking to camera" and get instant results.
+
+### Costs Reduced
+
+- **Eliminate duplicate content creation**: Find and reuse existing footage instead of reshooting ($5,000-50,000 per shoot avoided)
+- **Reduce storage waste**: Identify unused content for archival or deletion
+- **Minimize manual tagging labor**: Automatic visual understanding replaces human metadata work
+- **300-600% ROI within 12-18 months** for [well-optimized video programs](https://fortiervo.com/blog/boost-roi-with-semantic-mapping-and-behavioral-feedback-tactics/)
+
+### Decisions Accelerated
+
+- Marketing teams build campaigns in hours instead of days
+- Legal teams locate evidence in minutes instead of weeks
+- Product managers find user feedback clips for stakeholder presentations instantly
+- Training coordinators assemble learning modules without reviewing full recordings
+
+### New Capabilities Unlocked
+
+Semantic search enables workflows that were previously impossible:
+- **Cross-project discovery**: "Find all outdoor scenes across our entire library"
+- **Competitive analysis**: Locate specific product features in competitor videos
+- **Trend identification**: Discover how visual themes evolve over time
+- **Asset monetization**: Make archival footage commercially viable by making it discoverable
+
+As [industry analysis confirms](https://mixpeek.com/blog/semantic-video-search): "Video semantic search enables content discovery, efficient archiving and retrieval, and streamlined repurposing of video content through intelligent analysis of topics, entities, and context within the footage, at scale, which can drive cost efficiency, productivity gains, and scalability."
+
+---
+
+## Who Benefits
+
+### Primary Users
+
+**1. Media & Entertainment Studios**
+- Production teams searching for B-roll and archival footage
+- [Post-production editors](https://www.twelvelabs.io/blog/twelve-labs-and-avid) assembling cuts from large libraries
+- Archivists making decades of footage accessible
+- Broadcasters preparing news packages and documentaries
+
+**2. Enterprise Marketing & Communications**
+- Content marketers repurposing webinar recordings
+- Social media teams creating clips from events
+- Corporate communications finding CEO statements
+- Product marketing locating demo footage
+
+**3. Legal & Compliance Teams**
+- Attorneys finding evidence in depositions
+- Compliance officers reviewing training recordings
+- Risk management teams auditing recorded communications
+- eDiscovery professionals processing video evidence
+
+**4. Education & Training Organizations**
+- Instructional designers curating course content
+- Corporate trainers finding relevant examples
+- Academic researchers analyzing recorded lectures
+- Online learning platforms enhancing content discovery
+
+### Decision Makers Who Gain Value
+
+**Operations Leaders**: Reduce costs by eliminating duplicate content creation and manual review labor
+
+**Creative Directors**: Unlock creative potential by making entire libraries instantly searchable
+
+**Legal Counsel**: Mitigate risk by ensuring critical footage can be located when needed
+
+**CFOs**: Demonstrate ROI through measurable time savings and asset utilization improvements
+
+**Product Managers**: Accelerate development cycles by quickly surfacing user research and feedback
+
+---
+
 ## Architecture
 
 **Frontend**: Next.js 14 (React 18) + TailwindCSS + SWR
@@ -360,3 +521,17 @@ gsutil ls gs://BUCKET_NAME/index/
 ## License
 
 MIT
+
+---
+
+## Sources
+
+- [Journalism, Media, and Technology Trends 2026 - Reuters Institute](https://reutersinstitute.politics.ox.ac.uk/journalism-media-and-technology-trends-and-predictions-2026)
+- [How Semantic Video Search is Transforming Content Discovery - BlendVision](https://blendvision.com/en/blog/beyond-keywords-how-semantic-video-search-is-transforming-content-discovery)
+- [The Future of Media Archives: Unlocking Decades of Footage - ProductionHub](https://www.productionhub.com/blog/post/active-archives-the-future-of-media-workflows-in-modern-production-environments)
+- [Semantic Video Search: Unlocking Visual Content - Mixpeek](https://mixpeek.com/blog/semantic-video-search)
+- [Boost ROI with Semantic Mapping - Fortier Voiceover](https://fortiervo.com/blog/boost-roi-with-semantic-mapping-and-behavioral-feedback-tactics/)
+- [Semantic Search Algorithm: ROI & Enterprise Strategy - EWSolutions](https://www.ewsolutions.com/semantic-search-algorithm/)
+- [Semantic Content Discovery for Post-Production - Twelve Labs](https://www.twelvelabs.io/blog/twelve-labs-and-avid)
+- [Challenges and Solutions in Broadcast Archives - BBC R&D](https://www.dpconline.org/docs/miscellaneous/events/581-sound-vision-zybrycki/file)
+- [Effective Broadcast Archiving Solutions - Twistist](https://twistist.com/broadcast-archiving-solutions/)
