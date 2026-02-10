@@ -22,28 +22,6 @@ Editors spend [1 in 10 hours searching for content](https://www.productionhub.co
 - **Training & Education**: Locating relevant segments from recorded lectures, workshops, or demonstrations
 - **Broadcasting Studios**: Accessing decades of footage for news packages, documentaries, or retrospectives
 
-### Why This is Hard at Scale
-
-Traditional solutions fail because:
-
-1. **Keyword search requires perfect metadata** - Someone must manually tag every moment with exact terms. This is prohibitively expensive and incomplete.
-
-2. **Automatic transcription only captures spoken words** - Visual content (actions, scenes, objects, emotions) remains unsearchable.
-
-3. **Manual review doesn't scale** - Reviewing 100 hours of footage to find 30 seconds is economically impossible for most teams.
-
-4. **The problem compounds exponentially** - As video libraries grow, the probability of finding what you need without perfect metadata approaches zero.
-
-### The Hidden Costs
-
-Without effective video search:
-- **Footage goes unused**: Valuable content created at high cost is never discovered or repurposed
-- **Decisions slow down**: Teams settle for "good enough" rather than finding the perfect clip
-- **Duplication multiplies costs**: New footage is created because existing content can't be found
-- **Compliance risks increase**: Critical evidence or documentation remains buried when needed most
-
----
-
 ## Why Existing Solutions Fall Short
 
 ### Keyword-Based Search: The Metadata Problem
@@ -94,13 +72,6 @@ Organizations using semantic video search report:
 - **Editors reclaim 10% of their time** previously spent searching for footage
 
 **Real-world impact**: A production team managing 500 hours of footage reduces search time from hours to seconds. Instead of reviewing 20 clips manually, they query "person speaking to camera" and get instant results.
-
-### Costs Reduced
-
-- **Eliminate duplicate content creation**: Find and reuse existing footage instead of reshooting ($5,000-50,000 per shoot avoided)
-- **Reduce storage waste**: Identify unused content for archival or deletion
-- **Minimize manual tagging labor**: Automatic visual understanding replaces human metadata work
-- **300-600% ROI within 12-18 months** for [well-optimized video programs](https://fortiervo.com/blog/boost-roi-with-semantic-mapping-and-behavioral-feedback-tactics/)
 
 ### Decisions Accelerated
 
