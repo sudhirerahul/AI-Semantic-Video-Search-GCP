@@ -3,7 +3,8 @@ import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
+  // Medium (500) for default, semibold (600) for active - not bold, just more assertive
+  weight: ['400', '500', '600'],
   variable: '--font-inter',
 })
 

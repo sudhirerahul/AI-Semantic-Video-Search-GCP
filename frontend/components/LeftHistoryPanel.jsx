@@ -6,7 +6,7 @@ export default function LeftHistoryPanel({ videos, selectedVideo, onSelectVideo,
   const [showVideos, setShowVideos] = useState(true)
 
   return (
-    <div className="w-[270px] border-r border-brand-border bg-brand-surface flex flex-col">
+    <div className="w-[270px] border-r border-brand-border bg-brand-dark flex flex-col">
       {/* Header */}
       <div className="p-3 border-b border-brand-border">
         <button
@@ -17,27 +17,33 @@ export default function LeftHistoryPanel({ videos, selectedVideo, onSelectVideo,
         </button>
       </div>
 
-      {/* Tabs */}
-      <div className="flex border-b border-brand-border">
+      {/* Tabs - control console modes */}
+      <div className="flex border-b border-brand-border bg-brand-dark">
         <button
           onClick={() => setShowVideos(true)}
-          className={`flex-1 px-4 py-2.5 text-sm font-medium transition-colors ${
+          className={`relative flex-1 px-4 py-3 text-[13px] tracking-tighter transition-all duration-150 ${
             showVideos
-              ? 'text-brand-text-primary border-b-2 border-brand-accent-primary'
-              : 'text-brand-text-secondary hover:text-brand-text-primary'
+              ? 'text-brand-text-primary font-semibold'
+              : 'text-brand-text-secondary font-medium hover:text-brand-text-primary/80'
           }`}
         >
           Videos
+          {showVideos && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-accent-primary" />
+          )}
         </button>
         <button
           onClick={() => setShowVideos(false)}
-          className={`flex-1 px-4 py-2.5 text-sm font-medium transition-colors ${
+          className={`relative flex-1 px-4 py-3 text-[13px] tracking-tighter transition-all duration-150 ${
             !showVideos
-              ? 'text-brand-text-primary border-b-2 border-brand-accent-primary'
-              : 'text-brand-text-secondary hover:text-brand-text-primary'
+              ? 'text-brand-text-primary font-semibold'
+              : 'text-brand-text-secondary font-medium hover:text-brand-text-primary/80'
           }`}
         >
           History
+          {!showVideos && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-accent-primary" />
+          )}
         </button>
       </div>
 

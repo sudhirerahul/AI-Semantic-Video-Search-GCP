@@ -10,23 +10,32 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          dark: '#0B0F14',
-          surface: '#0E1216',
-          border: 'rgba(255,255,255,0.06)',
-          hover: 'rgba(255,255,255,0.08)',
+          // Control-room charcoal - dark graphite, midnight slate
+          dark: '#0D0E11',
+          surface: '#12131A',
+          border: 'rgba(255,255,255,0.05)',
+          hover: 'rgba(255,255,255,0.06)',
           text: {
-            primary: '#ECECF1',
-            secondary: '#9B9CA3',
-            tertiary: '#6E6F73',
+            // Near-white for active/primary (sharp against dark)
+            primary: '#E8E9ED',
+            // Cool muted gray for inactive tabs (subdued but readable)
+            secondary: '#7B7D85',
+            // Dimmer for numbers/metadata
+            tertiary: '#52545C',
           },
           accent: {
-            primary: '#7C3AED',
-            hover: '#8B5CF6',
+            // Cool indigo for active tab underline (precise, not decorative)
+            primary: '#6366F1',
+            hover: '#7C7FF6',
           }
         }
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        // Inter with tight spacing - clean, compact, engineered
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      },
+      letterSpacing: {
+        'tighter': '-0.02em',
       },
     },
   },

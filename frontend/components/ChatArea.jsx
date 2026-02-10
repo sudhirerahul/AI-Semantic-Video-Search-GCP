@@ -141,7 +141,7 @@ export default function ChatArea({ selectedVideo, messages, onMessagesChange, on
       </div>
 
       {/* Input area */}
-      <div className="border-t border-brand-border bg-brand-surface/50 backdrop-blur-xl">
+      <div className="border-t border-brand-border bg-brand-dark">
         <div className="max-w-3xl mx-auto px-4 py-4">
           <form onSubmit={handleSubmit} className="relative">
             <input
@@ -150,12 +150,12 @@ export default function ChatArea({ selectedVideo, messages, onMessagesChange, on
               onChange={(e) => setInput(e.target.value)}
               placeholder={selectedVideo ? "Search for scenes..." : "Select a video first"}
               disabled={!selectedVideo || isLoading}
-              className="w-full px-4 py-3 pr-12 rounded-xl bg-brand-dark border border-brand-border focus:border-brand-accent-primary focus:outline-none text-brand-text-primary placeholder-brand-text-tertiary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full px-4 py-3 pr-12 rounded-lg bg-brand-surface border border-brand-border focus:border-brand-accent-primary focus:outline-none text-brand-text-primary text-[14px] placeholder-brand-text-tertiary disabled:opacity-50 disabled:cursor-not-allowed transition-colors tracking-tight"
             />
             <button
               type="submit"
               disabled={!input.trim() || !selectedVideo || isLoading}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-brand-accent-primary hover:bg-brand-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded bg-brand-accent-primary hover:bg-brand-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

@@ -5,18 +5,18 @@ import { formatTime } from '../lib/api'
 export default function VideoPlayerPanel({ clip, onClose }) {
   if (!clip) {
     return (
-      <div className="w-[420px] flex-shrink-0 border-l border-brand-border bg-brand-surface/50 backdrop-blur-xl flex items-center justify-center">
+      <div className="w-[420px] flex-shrink-0 border-l border-brand-border bg-brand-dark flex items-center justify-center">
         <div className="text-center px-8">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-brand-dark flex items-center justify-center">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-brand-surface flex items-center justify-center">
             <svg className="w-8 h-8 text-brand-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-brand-text-primary mb-2">
+          <h3 className="text-base font-semibold text-brand-text-primary mb-2 tracking-tight">
             No clip playing
           </h3>
-          <p className="text-sm text-brand-text-secondary">
+          <p className="text-[13px] text-brand-text-secondary tracking-tight">
             Search for scenes and click Play to view clips
           </p>
         </div>
@@ -29,7 +29,7 @@ export default function VideoPlayerPanel({ clip, onClose }) {
   const minutesUntilExpiry = Math.floor((expiresAt - now) / 1000 / 60)
 
   return (
-    <div className="w-[420px] flex-shrink-0 border-l border-brand-border bg-brand-surface/50 backdrop-blur-xl flex flex-col">
+    <div className="w-[420px] flex-shrink-0 border-l border-brand-border bg-brand-dark flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-brand-border">
         <h2 className="text-sm font-semibold text-brand-text-primary">
