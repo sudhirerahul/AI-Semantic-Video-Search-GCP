@@ -68,19 +68,19 @@ export default function ChatArea({ selectedVideo, messages, onMessagesChange, on
         <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <h2 className="text-2xl font-semibold text-brand-text-primary mb-2">
-                  {selectedVideo ? `Search "${selectedVideo.title}"` : 'Select a video to start'}
+              <div className="text-center max-w-md">
+                <h2 className="text-lg font-semibold text-brand-text-primary mb-2 tracking-tight">
+                  {selectedVideo ? `Search: ${selectedVideo.title}` : 'Select a video to start'}
                 </h2>
-                <p className="text-brand-text-secondary">
-                  Ask questions about scenes in natural language
+                <p className="text-sm text-brand-text-secondary mb-6 leading-relaxed">
+                  Enter natural language queries to find specific scenes
                 </p>
-                <div className="mt-6 flex flex-wrap gap-2 justify-center">
+                <div className="flex flex-wrap gap-2 justify-center">
                   {['person speaking', 'outdoor scene', 'close up shot', 'two people talking'].map((example) => (
                     <button
                       key={example}
                       onClick={() => setInput(example)}
-                      className="px-4 py-2 rounded-lg bg-brand-surface border border-brand-border hover:border-brand-accent-primary text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors"
+                      className="px-3 py-1.5 rounded-md bg-brand-surface border border-brand-border hover:border-brand-accent-primary text-xs text-brand-text-secondary hover:text-brand-text-primary transition-all duration-150 ease-smooth"
                     >
                       {example}
                     </button>
@@ -127,10 +127,10 @@ export default function ChatArea({ selectedVideo, messages, onMessagesChange, on
 
           {isLoading && (
             <div className="flex justify-start animate-fade-in">
-              <div className="space-y-3">
-                <div className="text-brand-text-secondary text-sm">Searching...</div>
+              <div className="space-y-3 w-full max-w-2xl">
+                <div className="text-brand-text-secondary text-xs tracking-tight">Searching scenes...</div>
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-full max-w-md h-32 rounded-xl bg-brand-surface animate-pulse" />
+                  <div key={i} className="w-full h-24 rounded-md bg-brand-surface animate-skeleton border border-brand-border" />
                 ))}
               </div>
             </div>
@@ -150,16 +150,23 @@ export default function ChatArea({ selectedVideo, messages, onMessagesChange, on
               onChange={(e) => setInput(e.target.value)}
               placeholder={selectedVideo ? "Search for scenes..." : "Select a video first"}
               disabled={!selectedVideo || isLoading}
-              className="w-full px-4 py-3 pr-12 rounded-lg bg-brand-surface border border-brand-border focus:border-brand-accent-primary focus:outline-none text-brand-text-primary text-[14px] placeholder-brand-text-tertiary disabled:opacity-50 disabled:cursor-not-allowed transition-colors tracking-tight"
+              className="w-full px-4 py-2.5 pr-12 rounded-md bg-brand-surface border border-brand-border focus:border-brand-accent-primary focus:outline-none text-brand-text-primary text-sm placeholder-brand-text-tertiary disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 ease-smooth tracking-tight"
             />
             <button
               type="submit"
               disabled={!input.trim() || !selectedVideo || isLoading}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded bg-brand-accent-primary hover:bg-brand-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md bg-brand-accent-primary hover:bg-brand-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 ease-smooth"
             >
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
+              {isLoading ? (
+                <svg className="w-4 h-4 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              )}
             </button>
           </form>
         </div>

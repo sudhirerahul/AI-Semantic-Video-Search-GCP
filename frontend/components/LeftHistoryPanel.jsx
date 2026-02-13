@@ -11,7 +11,7 @@ export default function LeftHistoryPanel({ videos, selectedVideo, onSelectVideo,
       <div className="p-3 border-b border-brand-border">
         <button
           onClick={() => window.location.reload()}
-          className="w-full px-4 py-2.5 rounded-lg bg-brand-accent-primary hover:bg-brand-accent-hover text-white font-medium transition-colors text-sm"
+          className="w-full px-3 py-2 rounded-md bg-brand-accent-primary hover:bg-brand-accent-hover text-white font-medium transition-all duration-150 ease-smooth text-xs tracking-tight"
         >
           New conversation
         </button>
@@ -56,23 +56,25 @@ export default function LeftHistoryPanel({ videos, selectedVideo, onSelectVideo,
                 <button
                   key={video.video_id}
                   onClick={() => onSelectVideo(video)}
-                  className={`w-full p-3 rounded-lg text-left transition-colors ${
+                  className={`w-full p-3 rounded-md text-left transition-all duration-150 ease-smooth ${
                     selectedVideo?.video_id === video.video_id
                       ? 'bg-brand-hover'
                       : 'hover:bg-brand-hover/50'
                   }`}
                 >
-                  <div className="text-sm font-medium text-brand-text-primary mb-1">
+                  <div className="text-xs font-medium text-brand-text-primary mb-1 tracking-tight">
                     {video.title}
                   </div>
-                  <div className="text-xs text-brand-text-tertiary">
+                  <div className="text-[11px] text-brand-text-tertiary tracking-tight">
                     {video.num_shots} scenes • {Math.floor(video.duration / 60)}m {Math.floor(video.duration % 60)}s
                   </div>
                 </button>
               ))
             ) : (
-              <div className="p-4 text-center text-brand-text-tertiary text-sm">
-                Loading videos...
+              <div className="p-4 space-y-2">
+                {[1, 2].map((i) => (
+                  <div key={i} className="w-full h-16 rounded-md bg-brand-surface animate-skeleton border border-brand-border" />
+                ))}
               </div>
             )}
           </div>
