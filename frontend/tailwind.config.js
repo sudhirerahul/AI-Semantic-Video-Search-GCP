@@ -20,8 +20,8 @@ module.exports = {
             tertiary: '#52545C',
           },
           accent: {
-            primary: '#6366F1',
-            hover: '#7C7FF6',
+            primary: '#14B8A6',
+            hover: '#2DD4BF',
           }
         }
       },
